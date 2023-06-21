@@ -2,8 +2,6 @@
 
 package Sem.Sem3;
 
-import Homework.hw3.dList;
-
 class dList {
     static Node head;
     static Node tail;

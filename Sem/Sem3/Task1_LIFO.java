@@ -2,8 +2,6 @@
 
 package Sem.Sem3;
 
-import Homework.hw3.List;
-
 class List {
     static Node head;
 
@@ -78,25 +76,17 @@ class List {
 
     static void reverse() {
         Node cur = head;
-        Node next = cur.next;
-        Node after;
-        Node before = null;
-
         int size = 0;
         while (cur != null) {
             size++;
             cur = cur.next;
         }
-        // Node next = cur.next;
-        // Node after = next.next;
-
-        // head = next;
         for (int i = 1; i < size; i++) {
-            
-        
+            cur = head;
+            Node next = cur.next;
+            Node after;
+            Node before = null;
             boolean isFirstLoop = true;
-
-        // while (cur.next != null) {
             for (int j = 1; j <= size - i; j++) {
                 if (head == cur) {
                     head = next;
@@ -114,21 +104,7 @@ class List {
                 isFirstLoop = false;
             }
         }
-
-
-        // if (cur != null) {
-
-        //     cur = cur.next;
-
-        //     cur.next = head;
-            
-        //     head = cur;
-
-
-
-        // }
     }
-
 }
 
 public class Task1_LIFO {
@@ -140,6 +116,7 @@ public class Task1_LIFO {
         my_list.push_front(4);
         my_list.push_front(9);
         my_list.push_front(7);
+        my_list.push_front(8);
         my_list.print();
         // System.out.println(my_list.size());
         my_list.reverse();
