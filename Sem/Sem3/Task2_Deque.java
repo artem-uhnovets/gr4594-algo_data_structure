@@ -126,19 +126,17 @@ class dList {
 
         // находим количество итераций
         int size_loop = 0; // возможно начать с 1
-        while ((h_cur.next !=  t_cur ) || (h_cur != t_cur)) {
+        while (h_cur !=  null) {
             ++size_loop;
             h_cur = h_cur.next;
-            t_cur = t_cur.prev;
         }
 
-        // переназначаем cur переменные на head и tail
+        // переназначаем cur переменные на head и tail после подсчета size_loop
         h_cur = head;
         t_cur = tail;
-        for (int i = 1; i <= size_loop; i++) {
-            
-            // при каждой новой итерации будут переназначаться переменные после предыдущей итерации,
-            // где "сдвигаются" cur позиции у head и tail
+        for (int i = 1; i <= (size_loop / 2); i++) {
+            // при новой итерации будут переназначаться переменные после предыдущей итерации,
+            // где "сдвигаются" cur позиции для рокировок
             h_before = h_cur.prev;
             h_next = h_cur.next;
             t_before = t_cur.prev;
@@ -148,10 +146,17 @@ class dList {
             if (t_cur == tail) { // при 1ой итерации
                 h_cur.next = null; 
             } else { h_cur.next = t_next; } // вроде только эту строку можно использовать
-            h_cur.prev = t_before;
 
-            // меняем свойства next и prev у "хвостатых" узлов 
-            t_cur.next = h_next;
+            // воизбежании зацикленности при четном размере списка
+            if ((h_next != t_cur) && (t_before != h_cur)) {
+                h_cur.prev = t_before;  // зациклинность при четном списке
+                // меняем свойства next и prev у "хвостатых" узлов 
+                t_cur.next = h_next; // зациклинность при четном списке
+            } else {
+                h_cur.prev = t_cur; 
+                t_cur.next = h_cur; 
+            }
+            
             if (h_cur == head) {
                 t_cur.prev = null;
             } t_cur.prev = h_before;
@@ -161,12 +166,18 @@ class dList {
             if (h_before != null) {
                 h_before.next = t_cur;
             }
-            // меняем свойство prev у узла после h_cur
-            h_next.prev = t_cur;
+
+            // условие, для четного размера списка,
+            // т.к. в последней итерации может не быть узла между h_cur и t_cur
+            if ((h_next != t_cur) && (t_before != h_cur)) {
+                // меняем свойство prev у узла после h_cur
+                h_next.prev = t_cur;
+                
+                // меняем свойства next и prev у узлов рядом "стоящих" с t_cur
+                // меняем свойство next у узла до t_cur
+                t_before.next = h_cur;
+            }
             
-            // меняем свойства next и prev у узлов рядом "стоящих" с t_cur
-            // меняем свойство next у узла до t_cur
-            t_before.next = h_cur;
             // меняем свойство prev у узла после t_cur
             if (t_next != null) {
                 t_next.prev = h_cur;
@@ -186,7 +197,7 @@ class dList {
             // t_cur = t_cur.prev;        
         }        
     }
-    
+
     // static void reverse() {
     //     Node h_cur = head;
     //     Node h_before = null;
