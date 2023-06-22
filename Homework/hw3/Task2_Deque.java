@@ -115,29 +115,92 @@ class dList {
             }
         }
     }
+
+    static void reverse() {
+        Node h_cur = head;
+        Node h_before = null;
+        Node h_next = null;
+        Node t_cur = tail;
+        Node t_before = null;
+        Node t_next = null;
+
+        // находим количество итераций
+        int size_loop = 0; // возможно начать с 1
+        while (h_cur !=  null) {
+            ++size_loop;
+            h_cur = h_cur.next;
+        }
+
+        // переназначаем cur переменные на head и tail после подсчета size_loop
+        h_cur = head;
+        t_cur = tail;
+        for (int i = 1; i <= (size_loop / 2); i++) {
+            // при новой итерации будут переназначаться переменные после предыдущей итерации,
+            // где "сдвигаются" cur позиции для рокировок
+            h_before = h_cur.prev;
+            h_next = h_cur.next;
+            t_before = t_cur.prev;
+            t_next = t_cur.next;
+
+            // меняем свойства next и prev у "головных" узлов 
+            h_cur.next = t_next;
+            // воизбежании зацикленности при четном размере списка
+            if ((h_next != t_cur) && (t_before != h_cur)) {
+                h_cur.prev = t_before;
+                t_cur.next = h_next;
+            } else {
+                h_cur.prev = t_cur; 
+                t_cur.next = h_cur; 
+            }
+            t_cur.prev = h_before; 
+
+            // меняем свойства next и prev у узлов рядом "стоящих" с h_cur
+            // меняем свойство next у узла до h_cur
+            if (h_before != null) { h_before.next = t_cur; }
+
+            // условие, для четного размера списка,
+            // т.к. в последней итерации может не быть узла между h_cur и t_cur
+            if ((h_next != t_cur) && (t_before != h_cur)) {
+                // меняем свойство prev у узла после h_cur
+                h_next.prev = t_cur;
+                
+                // меняем свойства next и prev у узлов рядом "стоящих" с t_cur
+                // меняем свойство next у узла до t_cur
+                t_before.next = h_cur;
+            }
+            
+            // меняем свойство prev у узла после t_cur
+            if (t_next != null) { t_next.prev = h_cur; }
+
+            // при первой итерации меняем tail и head после рокировки
+            if (i == 1) {
+                tail = h_cur;
+                head = t_cur;
+            }
+
+            // переназначаем cur узлы на следуящие узлы
+            h_cur = h_next;
+            t_cur = t_before;     
+        }        
+    }
 }
 
 public class Task2_Deque {
     public static void main(String[] args) {
         dList my_list = new dList();
-        for (int i = 1; i <= 10; i++) {
-            my_list.push_front(i);
-        }
+        my_list.push_front(1);
+        my_list.push_front(3);
+        my_list.push_front(2);
+        my_list.push_front(4);
+        my_list.push_front(6);
+        my_list.push_front(9);
+        my_list.push_front(7);
+        my_list.push_front(8);
+        my_list.push_front(5);
+        my_list.print();
+        my_list.reverse();
+        my_list.print();
         
-        // my_list.print();
-        // my_list.pop_front();
-        // my_list.pop_front();
-        // my_list.print();
-        // my_list.push_back(7);
-        // my_list.print();
-        // my_list.pop_back();
-        // my_list.print();
-        // my_list.push_front(9);
-        // my_list.print();
-        // my_list.sort();
-        my_list.push_front(20);
-        my_list.print();
-        my_list.pop_back();
-        my_list.print();
+        
     }
 }

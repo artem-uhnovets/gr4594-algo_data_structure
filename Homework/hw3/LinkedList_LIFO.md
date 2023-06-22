@@ -214,7 +214,12 @@ subgraph HEAD
 6("7")
 end
 6 -->|cur.next| 5 -->|cur.next.next| 4 --> 3 --> 2 --> 1
-6 -->|н. поменять свойство next| 4
+6 -->|поменять свойство next| 4
+```
+```java
+next = cur.next;
+// next.next соответственно наследует cur.next.next т.е. узел со знач 4
+after = next.next;
 ```
 ```mermaid
 ---
@@ -229,7 +234,7 @@ flowchart LR
 subgraph HEAD
 6("7")
 end
-6 --> 4 --> 3 --> 2 --> 1
+6 -->|cur.next=after| 4 --> 3 --> 2 --> 1
 5 --> 4
 
 ```
@@ -246,8 +251,8 @@ flowchart LR
 subgraph HEAD
 6("7")
 end
-5 ==> 6 --> 4 --> 3 --> 2 --> 1
-5 x--поменять next--x 4
+5 ==>|next.next=cur| 6 -->|cur.next=after| 4 --> 3 --> 2 --> 1
+5 x--меняем next--x 4
 
 ```
 ```java
@@ -257,14 +262,106 @@ next = cur.next; // попробовать использовать next.next в
 //---------------------------
 
 // 1. нужно у узла cur со значением 7 поменять свойство next на узел со значением 4
-cur.next = next.next;
+cur.next = after;
 
 // 2. у узла со значением 9 поменять свойство next на узел со значением 9
-cur.next.next = cur;
+next.next = cur;
 
 // 3. как поступить с head?!
-
-cur=cur.next; // позволит нам "передвигаться" по списку (исользоваться в конце цикла?!)
-
-
+// head надо поменять с узла 7 на 9, но делать это нужно только 1 раз в начале цикла
+// head всегда должен быть в начале списка
+head = next;
 ```
+```mermaid
+---
+title: ""
+---
+flowchart LR
+subgraph "LoopArea"
+1("1")
+2("3")
+3("2")
+subgraph "\n\n\nnext"
+4("4")
+end
+subgraph "\n\n\ncur"
+5("9")
+end
+end
+subgraph "HEAD\n\n\nbefore"
+6("7")
+end
+6 --> 5 --> 4 --> 3 --> 2 --> 1
+```
+___
+Что если цикл начинать со след. узла от узла `head`!?!?!?! тогда
+```java
+// начальные переменные
+before = head;
+cur = head.next;
+next = cur.next;
+
+// действия рокировки
+// 1. узел 7 с 9 меняем на 4
+before.next = next;
+
+// 2. узел 9 с 4 меняем на 7
+cur.next = before;
+
+// 3. При 1ой итерации меняем head c узла 7 на 9
+if (i==1) { head = cur; }
+// или
+if (head == before) { head = cur; }
+```
+```mermaid
+---
+title: ""
+---
+flowchart LR
+subgraph "LoopArea"
+1("1")
+2("3")
+3("2")
+subgraph "\n\n\nnext"
+4("4")
+end
+subgraph "\n\n\nbefore"
+6("7")
+end
+end
+subgraph "HEAD\n\n\ncur"
+5("9")
+end
+
+5 --> 6 --> 4 --> 3 --> 2 --> 1
+```
+```java
+// присуждение новых узлов для before cur и next
+cur = before.next;
+next = cur.next;
+```
+```mermaid
+---
+title: ""
+---
+flowchart LR
+subgraph "LoopArea"
+1("1")
+2("3")
+subgraph "\n\n\nnext"
+3("2")
+end
+subgraph "\n\n\ncur"
+4("4")
+end
+subgraph "\n\n\nbefore"
+6("7")
+end
+end
+subgraph "HEAD"
+5("9")
+end
+5 --> 6 --> 4 --> 3 --> 2 --> 1
+```
+При 2ой итерации теперь надо как-то задейстовать узел с 9, вводить новую переменную?! before_before!?
+Через переменные `before` `cur` `next` и `after` скорее всего будет удобнее.

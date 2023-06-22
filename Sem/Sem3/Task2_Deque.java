@@ -143,29 +143,20 @@ class dList {
             t_next = t_cur.next;
 
             // меняем свойства next и prev у "головных" узлов 
-            if (t_cur == tail) { // при 1ой итерации
-                h_cur.next = null; 
-            } else { h_cur.next = t_next; } // вроде только эту строку можно использовать
-
+            h_cur.next = t_next;
             // воизбежании зацикленности при четном размере списка
             if ((h_next != t_cur) && (t_before != h_cur)) {
-                h_cur.prev = t_before;  // зациклинность при четном списке
-                // меняем свойства next и prev у "хвостатых" узлов 
-                t_cur.next = h_next; // зациклинность при четном списке
+                h_cur.prev = t_before;
+                t_cur.next = h_next;
             } else {
                 h_cur.prev = t_cur; 
                 t_cur.next = h_cur; 
             }
-            
-            if (h_cur == head) {
-                t_cur.prev = null;
-            } t_cur.prev = h_before;
+            t_cur.prev = h_before; 
 
             // меняем свойства next и prev у узлов рядом "стоящих" с h_cur
             // меняем свойство next у узла до h_cur
-            if (h_before != null) {
-                h_before.next = t_cur;
-            }
+            if (h_before != null) { h_before.next = t_cur; }
 
             // условие, для четного размера списка,
             // т.к. в последней итерации может не быть узла между h_cur и t_cur
@@ -179,9 +170,7 @@ class dList {
             }
             
             // меняем свойство prev у узла после t_cur
-            if (t_next != null) {
-                t_next.prev = h_cur;
-            }
+            if (t_next != null) { t_next.prev = h_cur; }
 
             // при первой итерации меняем tail и head после рокировки
             if (i == 1) {
@@ -191,140 +180,9 @@ class dList {
 
             // переназначаем cur узлы на следуящие узлы
             h_cur = h_next;
-            t_cur = t_before;
-            
-            // h_cur = h_cur.next;
-            // t_cur = t_cur.prev;        
+            t_cur = t_before;     
         }        
     }
-
-    // static void reverse() {
-    //     Node h_cur = head;
-    //     Node h_before = null;
-    //     Node h_next = null;
-    //     Node t_cur = tail;
-    //     Node t_before = null;
-    //     Node t_next = null;
-
-    //     // находим количество итераций
-    //     int size_loop = 0; // возможно начать с 1
-    //     while ((h_cur.next !=  t_cur ) || (h_cur != t_cur)) {
-    //         ++size_loop;
-    //         h_cur = h_cur.next;
-    //         t_cur = t_cur.prev;
-    //     }
-
-    //     // переназначаем cur переменные на head и tail
-    //     h_cur = head;
-    //     t_cur = tail;
-    //     for (int i = 1; i <= size_loop; i++) {
-            
-    //         // при каждой новой итерации будут переназначаться переменные после предыдущей итерации,
-    //         // где "сдвигаются" cur позиции у head и tail
-    //         h_before = h_cur.prev;
-    //         h_next = h_cur.next;
-    //         t_before = t_cur.prev;
-    //         t_next = t_cur.next;
-
-    //         // меняем свойства next и prev у "головных" узлов 
-    //         if (t_cur == tail) { // при 1ой итерации
-    //             h_cur.next = null; 
-    //         } else { h_cur.next = t_next; } // вроде только эту строку можно использовать
-    //         h_cur.prev = t_before;
-
-    //         // меняем свойства next и prev у "хвостатых" узлов 
-    //         t_cur.next = h_next;
-    //         if (h_cur == head) {
-    //             t_cur.prev = null;
-    //         } t_cur.prev = h_before;
-
-    //         // меняем свойства next и prev у узлов рядом "стоящих" с h_cur
-    //         // меняем свойство next у узла до h_cur
-    //         if (h_before != null) {
-    //             h_before.next = t_cur;
-    //         }
-    //         // меняем свойство prev у узла после h_cur
-    //         h_next.prev = t_cur;
-            
-    //         // меняем свойства next и prev у узлов рядом "стоящих" с t_cur
-    //         // меняем свойство next у узла до t_cur
-    //         t_before.next = h_cur;
-    //         // меняем свойство prev у узла после t_cur
-    //         if (t_next != null) {
-    //             t_next.prev = h_cur;
-    //         }
-
-    //         // при первой итерации меняем tail и head после рокировки
-    //         if (i == 1) {
-    //             tail = h_cur;
-    //             head = t_cur;
-    //         }
-
-    //         // переназначаем cur узлы на следуящие узлы
-    //         h_cur = h_next;
-    //         t_cur = t_before;
-            
-    //         // h_cur = h_cur.next;
-    //         // t_cur = t_cur.prev;        
-    //     }        
-    // }
-
-    // static void reverse() {
-    //     Node h_cur = head;
-    //     Node h_before = head.prev;
-    //     Node h_next = head.next;
-    //     Node t_cur = tail;
-    //     Node t_before = tail.prev;
-    //     Node t_next = tail.next;
-
-    //     // находим количество итераций
-    //     int size_loop = 0; // возможно начать с 1
-    //     while ((h_cur.next !=  t_cur )|| (h_cur != t_cur)) {
-    //         ++size_loop;
-    //         h_cur = h_cur.next;
-    //         t_cur = t_cur.prev;
-    //     }
-
-    //     // меняем свойства next и prev у "головных" узлов 
-    //     if (t_cur == tail) { // при 1ой итерации
-    //         h_cur.next = null; 
-    //     } else { h_cur.next = t_next; } // вроде только эту строку можно использовать
-    //     h_cur.prev = t_before;
-
-    //     // меняем свойства next и prev у "хвостатых" узлов 
-    //     t_cur.next = h_next;
-    //     if (h_cur == head) {
-    //         t_cur.prev = null;
-    //     } t_cur.prev = h_before;
-
-    //     // меняем свойства next и prev у узлов рядом "стоящих" с h_cur
-    //     // меняем свойство next у узла до h_cur
-    //     if (h_before != null) {
-    //         h_before.next = t_cur;
-    //     }
-    //     // меняем свойство prev у узла после h_cur
-    //     h_next.prev = t_cur;
-        
-    //     // меняем свойства next и prev у узлов рядом "стоящих" с t_cur
-    //     // меняем свойство next у узла до t_cur
-    //     t_before.next = h_cur;
-    //     // меняем свойство prev у узла после t_cur
-    //     if (t_next != null) {
-    //         t_next.prev = h_cur;
-    //     }
-
-    //     // if (i == 1) {
-    //         tail = h_cur;
-    //         head = t_cur;
-    //     // }
-
-    //     t_cur = tail;
-    //     h_cur = head;
-        
-    //     t_cur = t_cur.next;        
-    //     h_cur = h_cur.next;
-        
-    // }
 }
 
 public class Task2_Deque {
@@ -334,6 +192,7 @@ public class Task2_Deque {
         my_list.push_front(3);
         my_list.push_front(2);
         my_list.push_front(4);
+        my_list.push_front(6);
         my_list.push_front(9);
         my_list.push_front(7);
         my_list.push_front(8);

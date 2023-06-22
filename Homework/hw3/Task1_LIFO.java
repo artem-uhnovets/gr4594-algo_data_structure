@@ -2,6 +2,8 @@
 
 package Homework.hw3;
 
+import java.util.Iterator;
+
 class List {
     static Node head;
 
@@ -76,61 +78,29 @@ class List {
 
     static void reverse() {
         Node cur = head;
-        Node next = cur.next;
-        Node after;
+        Node next = null;
+        Node after = null;
         Node before = null;
-
-        int size = List.size();
-        // Node next = cur.next;
-        // Node after = next.next;
-
-        // head = next;
-        for (int i = 1; i < size; i++) {
-            
-        
-            boolean isFirstLoop = true;
-
-        // while (cur.next != null) {
-            for (int j = 1; j <= size - i; j++) {
-                if (head == cur) {
-                    head = next;
-                } 
-
-                next = cur.next;
-                after = next.next;
-
-                cur.next = after;
-                next.next = cur;
-                if (!isFirstLoop) {
-                    before.next = next;
-                }
-                before = next;
-                isFirstLoop = false;
-            }
-        }
-
-
-        // if (cur != null) {
-
-        //     cur = cur.next;
-
-        //     cur.next = head;
-            
-        //     head = cur;
-
-
-
-        // }
-    }
-
-    static int size() {
-        Node cur = head;
-        int count = 0;
+        int size = 0;
         while (cur != null) {
-            count++;
+            size++;
             cur = cur.next;
         }
-        return count;
+        for (int i = 1; i < size; i++) {
+            cur = head;
+            next = cur.next;
+            after = next.next;
+            before = null;
+            for (int j = 1; j <= size - i; j++) {
+                if (head == cur) { head = next; } 
+                next = cur.next;
+                after = next.next;
+                cur.next = after;
+                next.next = cur;
+                if (j != 1) { before.next = next; }
+                before = next;
+            }
+        }
     }
 }
 
@@ -143,8 +113,9 @@ public class Task1_LIFO {
         my_list.push_front(4);
         my_list.push_front(9);
         my_list.push_front(7);
+        my_list.push_front(8);
+        my_list.push_front(5);
         my_list.print();
-        // System.out.println(my_list.size());
         my_list.reverse();
         my_list.print();
     }
