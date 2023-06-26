@@ -18,16 +18,17 @@ direction TB
 1("11")
 2("6")
 3("14")
-4("5")
+4("8")
 5("27")
-6("8")
+6("5")
 7("26")
 8("23")
 9("1")
 10("22")
 1 --- 2 & 3
 2 --- 6 & 4
-4 --- 9
+6 --- 9
+6 --- 15("-")
 3 --- 11("_")
 3 --- 5
 5 --- 7
@@ -37,15 +38,15 @@ direction TB
 8 --- 10
 8 --- 14("_")
 style 1 fill:#000
-style 2 fill:#ff0000
-style 3 fill:#ff0000
-style 4 fill:#ff0000
-style 5 fill:#ff0000
-style 6 fill:#ff0000
-style 7 fill:#ff0000
-style 8 fill:#ff0000
-style 9 fill:#ff0000
-style 10 fill:#ff0000
+style 2 fill:#bc0000
+style 3 fill:#bc0000
+style 4 fill:#bc0000
+style 5 fill:#bc0000
+style 6 fill:#bc0000
+style 7 fill:#bc0000
+style 8 fill:#bc0000
+style 9 fill:#bc0000
+style 10 fill:#bc0000
 end
 ```
 ___
@@ -62,5 +63,35 @@ Node{value=11,color=BLACK}
 ---------Node{value=1,color=RED}
 ```
 ```mermaid
+flowchart TB
+subgraph After
+direction TB
+11
+14
+6
+8
+27
+5
+26
+23
+1
+22
 
+11 --- 6 & 26
+6 --- 5 & 8
+26 --- 22 & 27
+5 --- 1
+22 --- 14 & 23
+
+style 11 fill:#000,color:#fff
+style 14 fill:#000,color:#fff
+style 6 fill:#000,color:#fff
+style 8 fill:#000,color:#fff
+style 27 fill:#000,color:#fff
+style 5 fill:#000,color:#fff
+style 26 fill:#000,color:#fff
+style 23 fill:#000,color:#fff
+style 1 fill:#bc0000
+style 22 fill:#bc0000
+end
 ```
