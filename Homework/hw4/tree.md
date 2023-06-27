@@ -95,3 +95,93 @@ style 1 fill:#bc0000
 style 22 fill:#bc0000
 end
 ```
+```mermaid
+flowchart TB
+subgraph After
+direction TB
+
+11 --- 6 --- 5 --- 1 --- node1[null]
+1 --- node2[null]
+5 --- node3[null]
+6 --- 8 --- node4[null]
+8 --- node5[null]
+11 --- 26 --- 22 --- 14 --- node6[null]
+14 --- node7[null]
+22 --- 23 --- node8[null]
+23 --- node9[null]
+26 --- 27 --- node10[null]
+27 --- node12[null]
+
+style 11 fill:#000,color:#fff
+style 14 fill:#000,color:#fff
+style 6 fill:#000,color:#fff
+style 8 fill:#000,color:#fff
+style 27 fill:#000,color:#fff
+style 5 fill:#000,color:#fff
+style 26 fill:#000,color:#fff
+style 23 fill:#000,color:#fff
+style 1 fill:#bc0000
+style 22 fill:#bc0000
+end
+```
+
+```mermaid
+flowchart TB
+subgraph After
+direction TB
+
+11 --- 6 --- 5 --- 1 --- node1[" "]
+1 --- node2[" "]
+5 --- node3[" "]
+6 --- 8 --- node4[" "]
+8 --- node5[" "]
+11 --- 26 --- 22 --- 14 --- node6[" "]
+14 --- node7[" "]
+22 --- 23 --- node8[" "]
+23 --- node9[" "]
+26 --- 27 --- node10[" "]
+27 --- node12[" "]
+
+style 11 fill:#000,color:#fff
+style 14 fill:#000,color:#fff
+style 6 fill:#000,color:#fff
+style 8 fill:#000,color:#fff
+style 27 fill:#000,color:#fff
+style 5 fill:#000,color:#fff
+style 26 fill:#000,color:#fff
+style 23 fill:#000,color:#fff
+style 1 fill:#bc0000,color:#fff
+style 22 fill:#bc0000,color:#fff
+end
+```
+```mermaid
+flowchart TB
+subgraph After
+direction TB
+
+11 --- 6
+11 --- 26
+6 --- 5
+6 --- 8
+26 --- 22
+26 --- 27
+5 --- 1
+5 --- node4[" "]
+8 --- node5[" "]
+8 --- node6[" "]
+22 --- 14
+22 --- 23
+27 --- node8[" "]
+27 --- node9[" "]
+style 11 fill:#000,color:#fff
+style 14 fill:#000,color:#fff
+style 6 fill:#000,color:#fff
+style 8 fill:#000,color:#fff
+style 27 fill:#000,color:#fff
+style 5 fill:#000,color:#fff
+style 26 fill:#000,color:#fff
+style 23 fill:#000,color:#fff
+style 1 fill:#bc0000,color:#fff
+style 22 fill:#bc0000,color:#fff
+end
+```
